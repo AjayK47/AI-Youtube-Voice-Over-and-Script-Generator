@@ -3,7 +3,7 @@ Generating Voice over audio for Youtube Videos based on Youtube Title
 
 This project is a Streamlit application that leverages various AI models to generate YouTube scripts and voiceovers. It aims to assist content creators in producing high-quality YouTube videos with minimal effort.
 
-### Live Demo: [Web Application](https://ai-youtube-voice-over-generator.streamlit.app/)
+### Live Demo: https://ai-youtube-voice-over-generator.streamlit.app
 
 ## WorkFlow
 ![Workflow](https://github.com/user-attachments/assets/07d4c8ad-d8f8-4fea-bcd6-f5948f6185af)

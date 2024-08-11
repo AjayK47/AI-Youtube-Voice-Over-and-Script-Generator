@@ -2,4 +2,4 @@
 Generating Voice over audio for Youtube Videos based on Youtube Title and Context Video 
 
 
-### Live Demoo: [Website](https://ai-youtube-voice-over-generator.streamlit.app/)
+### Live Demo: [Web Application](https://ai-youtube-voice-over-generator.streamlit.app/)

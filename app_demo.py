@@ -3,6 +3,7 @@ from duckduckgo_search import DDGS
 import google.generativeai as genai
 from gradio_client import Client
 import soundfile as sf
+from groq import Groq
 import os
 import tempfile
 import time

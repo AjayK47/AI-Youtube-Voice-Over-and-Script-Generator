@@ -2,6 +2,7 @@ import streamlit as st
 from duckduckgo_search import DDGS
 import google.generativeai as genai
 from gradio_client import Client
+from groq import Groq
 import soundfile as sf
 import os
 import tempfile
@@ -33,13 +34,6 @@ elif text_model.startswith("llama") or text_model.startswith("gemma"):
     user_api_key = st.sidebar.text_input("Enter your Groq API key:", type="password")
     if user_api_key:
         os.environ['GROQ_API_KEY'] = user_api_key
-
-# TTS Model Selection in Sidebar
-tts_model = st.sidebar.selectbox(
-    "Select TTS Model:",
-    ["mrfakename/MeloTTS"],
-    index=0  # Default to MeloTTS model
-)
 
 # User Input for Video Title
 title = st.text_input("Enter the title of your YouTube video:")
@@ -109,36 +103,6 @@ def generate_youtube_script(title, context, video_length, regenerate=False):
         )
         return response.choices[0].message.content
 
-def text_to_speech(script):
-    try:
-        client = Client("mrfakename/MeloTTS")
-        result = client.predict(
-            text=script,
-            speaker="EN-US",
-            speed=1,
-            language="EN",
-            api_name="/synthesize"
-        )
-        with tempfile.NamedTemporaryFile(delete=False, suffix=".wav") as temp_file:
-            output_filename = temp_file.name
-            data, samplerate = sf.read(result)
-            sf.write(output_filename, data, samplerate)
-
-        return output_filename
-    except Exception as e:
-        st.error(f"An error occurred during text-to-speech conversion: {str(e)}")
-        return None
-
-def delayed_file_cleanup(file_path, max_attempts=5, delay=1):
-    for _ in range(max_attempts):
-        try:
-            if os.path.exists(file_path):
-                os.unlink(file_path)
-            return
-        except PermissionError:
-            time.sleep(delay)
-    print(f"Warning: Unable to delete temporary file: {file_path}")
-
 def generate_script():
     if title:
         try:
@@ -147,6 +111,8 @@ def generate_script():
             st.write(summary)
 
             script = generate_youtube_script(title, summary, video_length)
+            st.session_state['current_script'] = script
+            st.session_state['script_status'] = 'new'
             st.write("**Generated Script:**")
             st.write(script)
 
@@ -158,30 +124,6 @@ def generate_script():
         st.error("Please enter a title for the YouTube video.")
         return None
 
-def generate_audio(script):
-    with st.spinner("Converting text to speech..."):
-        output_file = text_to_speech(script)
-    
-    if output_file:
-        st.success("Audio conversion complete!")
-        
-        audio_file = open(output_file, 'rb')
-        audio_bytes = audio_file.read()
-        audio_file.close()
-        
-        st.audio(audio_bytes, format='audio/wav')
-        
-        st.download_button(
-            label="Download Audio",
-            data=audio_bytes,
-            file_name="tts_output.wav",
-            mime="audio/wav"
-        )
-        
-        st.session_state['cleanup_file'] = output_file
-    else:
-        st.error("Failed to convert text to speech. Please try again.")
-
 def main():
     if st.button("Generate Script"):
        if (text_model.startswith("gemini") and not user_api_key) or \
@@ -189,9 +131,7 @@ def main():
            st.error("Please enter the required API keys.")
        else:
          script = generate_script()
-         if script:
-            st.session_state['current_script'] = script
-            st.session_state['script_status'] = 'new'
+         
     if 'current_script' in st.session_state:
         if st.session_state.get('script_status') == 'regenerated':
             st.write("**Regenerated Script:**")
@@ -206,25 +146,19 @@ def main():
             index=None  # This ensures no option is selected by default
         )
         
-        if script_action == "Generate Audio":
-            if st.button("Generate Audio"):
-                generate_audio(st.session_state['current_script'])
-        elif script_action == "Edit Script":
+        if script_action == "Edit Script":
             edited_script = st.text_area("Edit Script", st.session_state['current_script'], height=300)
             if st.button("Generate Audio from Edited Script"):
-                generate_audio(edited_script)
+                st.session_state['current_script'] = edited_script
+                # Proceed with the audio generation code
+        
         elif script_action == "Regenerate Script":
             if st.button("Regenerate Script"):
+                st.session_state['script_status'] = 'regenerated'
                 new_script = generate_script()
                 if new_script:
                     st.session_state['current_script'] = new_script
-                    st.session_state['script_status'] = 'regenerated'
                     st.rerun()
-
-    # Attempt cleanup of previous file, if any
-    if 'cleanup_file' in st.session_state:
-        delayed_file_cleanup(st.session_state['cleanup_file'])
-        del st.session_state['cleanup_file']
 
 if __name__ == "__main__":
     main()

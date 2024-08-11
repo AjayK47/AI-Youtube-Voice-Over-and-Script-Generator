@@ -16,12 +16,15 @@ st.title("YouTube Script and Voiceover Generator")
 # Sidebar for Model Selection and API Keys
 st.sidebar.header("Model and API Key Settings")
 
-# note about where to obtain API keys
-st.sidebar.markdown("""
-**Where to obtain API keys:**
-- [Get your GROQ API key](https://console.groq.com/keys)
-- [Get your Gemini API key](https://aistudio.google.com/app/apikey)
-""")
+# Add a note about where to obtain API keys using st.info
+st.sidebar.info(
+    """
+    **Where to obtain API keys:**
+    - [Get your GROQ API key](https://console.groq.com/keys)
+    - [Get your Gemini API key](https://aistudio.google.com/app/apikey)
+    """
+)
+
 
 # Text Model Selection in Sidebar
 text_model = st.sidebar.selectbox(

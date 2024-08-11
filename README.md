@@ -42,21 +42,22 @@ This project is a Streamlit application that leverages various AI models to gene
 
 ### Generating Scripts
 
-1. **Enter Video Title**: Provide a title for your YouTube video in the main input field.
-2. **Set Video Length**: Specify the desired length of the video in minutes.
-3. **Generate Script**: Click the "Generate Script" button to create a YouTube script based on the title and summarized context from the web.
-4. **Edit Script**: If needed, you can edit the generated script before converting it to audio.
+1. **Enter Video Title**: Input the title for your YouTube video.
+2. **Set Video Length**: Specify the desired video length in minutes.
+3. **Generate Script**: Click the "Generate Script" button.
+4. **Edit Script**: Modify the generated script if needed.
 
 ### Generating Voiceovers
 
-1. **Select TTS Model**: Choose your preferred TTS model in the sidebar.
-2. **Generate Audio**: After generating the script, click the "Generate Audio" button to convert the script into a voiceover.
-3. **Download Audio**: Once the audio is generated, you can listen to it within the app and download it for use in your videos.
+1. **Select TTS Model**: Choose a TTS model in the sidebar.
+2. **Generate Audio**: Click the "Generate Audio" button after the script is ready.
+3. **Download Audio**: Listen to and download the generated audio.
 
 ### Regenerating and Editing
 
-- **Regenerate Script**: If you're not satisfied with the generated script, you can regenerate it with a single click.
-- **Edit Script**: You can manually edit the script and then convert it to audio.
+- **Regenerate Script**: Click to create a new script if desired.
+- **Edit Script**: Update the script and convert it to audio.
+
 
 
 ## Contributing

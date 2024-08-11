@@ -6,7 +6,13 @@ This project is a Streamlit application that leverages various AI models to gene
 ### Live Demo: [Web Application](https://ai-youtube-voice-over-generator.streamlit.app/)
 
 ## WorkFlow
+![Workflow](https://github.com/user-attachments/assets/07d4c8ad-d8f8-4fea-bcd6-f5948f6185af)
 
+## Requirements
+
+- [Google Gemini Api Key](https://aistudio.google.com/app/apikey)
+- [Groq API](https://console.groq.com/keys)
+- [ElevenLabs API](https://elevenlabs.io/api)
 
 ## Installation
 
@@ -52,11 +58,6 @@ This project is a Streamlit application that leverages various AI models to gene
 - **Regenerate Script**: If you're not satisfied with the generated script, you can regenerate it with a single click.
 - **Edit Script**: You can manually edit the script and then convert it to audio.
 
-## Requirements
-
-- [Google Gemini Api Key](https://aistudio.google.com/app/apikey)
-- [Groq API](https://console.groq.com/keys)
-- [ElevenLabs API](https://elevenlabs.io/api)
 
 ## Contributing
 Contributions are welcome! Please open an issue or submit a pull request if you have suggestions for improvements or new features.

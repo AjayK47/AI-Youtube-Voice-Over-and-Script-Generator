@@ -9,5 +9,4 @@ langchain-groq
 groq
 langchain-core
 elevenlabs
-libportaudio2
 requests
